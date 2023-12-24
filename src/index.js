@@ -1,7 +1,7 @@
-import add from "@/add";
+import add from '@/add';
 
 function component() {
-  const element = document.createElement("div");
+  const element = document.createElement('div');
 
   element.innerHTML = add(1, 1);
 
