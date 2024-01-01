@@ -1,45 +1,47 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env) => ({
-  entry: "./src/index.js",
+  entry: './src/router/index.js',
   resolve: {
-    extensions: [".js"],
+    extensions: ['.js'],
     alias: {
-      "@": path.resolve(__dirname, "src/"),
-      "@public": path.resolve(__dirname, "public/"),
+      '@': path.resolve(__dirname, 'src/'),
+      '@public': path.resolve(__dirname, 'public/'),
     },
   },
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
   },
   devServer: {
     port: 9000,
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: "index.html",
-      template: path.resolve(__dirname, "./public/index.html"),
+      filename: 'index.html',
+      template: path.resolve(__dirname, './public/index.html'),
     }),
   ],
-  mode: env.production ? "production" : "development",
+  mode: env.production ? 'production' : 'development',
   module: {
     rules: [
       {
         test: /\.m?js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ["@babel/preset-env"],
+            presets: ['@babel/preset-env'],
           },
         },
       },
       {
         test: /\.html$/i,
         use: {
-          loader: "html-loader",
+          loader: 'html-loader',
           options: {
             minimize: true,
           },
@@ -47,7 +49,7 @@ module.exports = (env) => ({
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
