@@ -9,3 +9,9 @@ export const getParams = (match) => {
 
   return Object.fromEntries(keys.map((key, index) => [key, values[index]]));
 };
+
+export const getQueryParams = (search) => {
+  const urlSearchParams = new URLSearchParams(search);
+
+  return Object.fromEntries(urlSearchParams.entries());
+};
