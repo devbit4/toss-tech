@@ -11,6 +11,7 @@
   },
   "rules": {
     "import/extensions": ["off"],
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "no-restricted-globals": "off"
   }
 }
