@@ -16,6 +16,8 @@ const findRoute = (routes, pathname) => {
 const renderRoute = () => {
   const targetRoute = findRoute(pageRoutes, location.pathname);
 
+  if (!targetRoute) return;
+
   const params = getParams(targetRoute);
   const queryParams = getQueryParams(location.search);
 
