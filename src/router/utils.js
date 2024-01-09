@@ -11,8 +11,10 @@ export const getParams = (target) => {
   return Object.fromEntries(keys.map((key, index) => [key, values[index]]));
 };
 
-export const getQueryParams = (search) => {
-  const urlSearchParams = new URLSearchParams(search);
+export const getQueryParams = (location) => {
+  const url = new URL(location);
+
+  const urlSearchParams = new URLSearchParams(url.search);
 
   return Object.fromEntries(urlSearchParams.entries());
 };

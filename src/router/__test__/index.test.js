@@ -17,29 +17,31 @@ const routes = [
 
 describe('router test', () => {
   test('should verify that the pathToRegex function works properly', () => {
-    expect(pathToRegex('/')).toEqual(/^\/$/);
-    expect(pathToRegex('/posts/:id')).toEqual(/^\/posts\/(.+)$/);
-    expect(pathToRegex('/posts')).toEqual(/^\/posts$/);
+    const regex = pathToRegex('/');
+    const regex2 = pathToRegex('/posts/:id');
 
-    expect(pathToRegex('/posts/:id')).not.toEqual(/^\/posts$/);
-    expect(pathToRegex('/posts')).not.toEqual(/^\/posts\/(.+)$/);
+    expect(regex.test('/')).toBeTruthy();
+    expect(regex.test('/posts')).toBeFalsy();
+
+    expect(regex2.test('/posts/3')).toBeTruthy();
+    expect(regex2.test('/posts')).toBeFalsy();
   });
 
   test('should return correct params when the getParams function works properly', () => {
     const pathname = '/posts/1';
-
     const targetRoute = findRoute(routes, pathname);
-
     expect(getParams(targetRoute)).toEqual({ id: '1' });
     expect(getParams(targetRoute).id).not.toBe(2);
     expect(getParams(targetRoute)).not.toEqual({ no: '1' });
   });
 
-  test('should return correct queryParams when the findRoute function works properly', () => {
-    const search = '?a=1&b=2';
+  test('should return correct queryParams when the getQueryParams function works properly', () => {
+    const url = 'https://www.google.com?a=1&b=2';
+    const url2 = 'https://www.google.com?a=1b=2';
 
-    expect(getQueryParams(search)).toEqual({ a: '1', b: '2' });
-    expect(getQueryParams(search)).not.toEqual({ a: '1', b: '3' });
+    expect(getQueryParams(url)).toEqual({ a: '1', b: '2' });
+    expect(getQueryParams(url)).not.toEqual({ a: '1', b: '3' });
+    expect(getQueryParams(url2)).not.toEqual({ a: '1', b: '2' });
   });
 
   test('should verify that the findRoute function works properly', () => {

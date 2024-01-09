@@ -19,7 +19,7 @@ const renderRoute = () => {
   if (!targetRoute) return;
 
   const params = getParams(targetRoute);
-  const queryParams = getQueryParams(location.search);
+  const queryParams = getQueryParams(location);
 
   document.querySelector('#app').innerHTML = targetRoute.route.page({
     params,
