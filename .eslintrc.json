@@ -12,6 +12,12 @@
   "rules": {
     "import/extensions": ["off"],
     "import/no-unresolved": "off",
-    "no-restricted-globals": "off"
+    "no-restricted-globals": "off",
+    "no-new": "off",
+    "no-undef": "off",
+    "no-underscore-dangle": "off",
+    "new-cap": "off",
+    "max-classes-per-file": "off",
+    "class-methods-use-this": "off"
   }
 }
