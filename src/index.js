@@ -4,9 +4,9 @@ import DesignPage from '@/pages/Design';
 import NotFoundPage from '@/pages/NotFound';
 import Router from '@/router/index.js';
 
-const root = document.querySelector('#app');
+const target = document.querySelector('#app');
 
-const router = new Router(root);
+const router = new Router(target);
 
 router
   .addRoute({ path: '/', page: ArticlesPage })
