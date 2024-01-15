@@ -1,6 +1,11 @@
-const { default: Component } = require('../../core/Component');
+const { default: Component } = require('@/core/Component');
 const { default: Router } = require('..');
 const { pathToRegex, getParams, getQueryParams } = require('../utils');
+
+// 실제 페이지 컴포넌트 import
+const { default: ArticlesPage } = require('@/pages/Articles');
+const { default: DesignPage } = require('@/pages/Design');
+const { default: NotFoundPage } = require('@/pages/NotFound');
 
 class Home extends Component {
   template() {
@@ -110,5 +115,40 @@ describe('router test', () => {
     router._navigateTo('/hello');
     expect(target.innerHTML).not.toContain('<h3>list</h3>');
     expect(target.innerHTML).toContain('<h3>404</h3>');
+  });
+});
+
+describe('toss-tech page router test', () => {
+  const target = document.body;
+  const router = new Router(target);
+
+  beforeAll(() => {
+    router
+      .addRoute({
+        path: '/',
+        page: ArticlesPage,
+      })
+      .addRoute({
+        path: '/design',
+        page: DesignPage,
+      })
+      .addRoute({
+        path: '*',
+        page: NotFoundPage,
+      });
+  });
+
+  test('should render the target page when the navigateTo function works properly', () => {
+    router._navigateTo('/');
+
+    expect(target.innerHTML).toContain('개발');
+
+    router._navigateTo('/design');
+
+    expect(target.innerHTML).toContain('디자인');
+
+    router._navigateTo('/hello');
+
+    expect(target.innerHTML).toContain('이 페이지를 찾을 수 없습니다.');
   });
 });
