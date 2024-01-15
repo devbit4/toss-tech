@@ -1,47 +1,60 @@
-import pageRoutes from './routes';
 import { pathToRegex, getParams, getQueryParams } from './utils';
 
-const nav = document.querySelector('.nav');
+class Router {
+  constructor(target) {
+    this.routes = [];
+    this.target = target;
+  }
 
-const findRoute = (routes, pathname) => {
-  const allRoutes = routes.map((route) => ({
-    route,
-    matchedPathInfo:
-      route.path === '*' ? [pathname] : pathname.match(pathToRegex(route.path)),
-  }));
+  addRoute(route) {
+    this.routes.push(route);
+    return this;
+  }
 
-  return allRoutes.find((route) => route.matchedPathInfo !== null);
-};
+  _findRoute(pathname) {
+    const allRoutes = this.routes.map((route) => ({
+      route,
+      matchedPathInfo:
+        route.path === '*'
+          ? [pathname]
+          : pathname.match(pathToRegex(route.path)),
+    }));
 
-const renderRoute = () => {
-  const targetRoute = findRoute(pageRoutes, location.pathname);
+    return allRoutes.find((route) => route.matchedPathInfo !== null);
+  }
 
-  if (!targetRoute) return;
+  _renderRoute() {
+    const targetRoute = this._findRoute(location.pathname);
 
-  const params = getParams(targetRoute);
-  const queryParams = getQueryParams(location);
+    const props = {
+      params: getParams(targetRoute),
+      queryParams: getQueryParams(location),
+    };
 
-  document.querySelector('#app').innerHTML = targetRoute.route.page({
-    params,
-    queryParams,
-  });
-};
+    new targetRoute.route.page(this.target, props);
+  }
 
-const changeRoute = (url) => {
-  history.pushState(null, null, url);
-  renderRoute();
-};
+  _navigateTo(url) {
+    history.pushState(null, null, url);
+    this._renderRoute();
+  }
 
-document.addEventListener('DOMContentLoaded', () => {
-  nav.addEventListener('click', (e) => {
-    if (e.target.matches('[data-link]')) {
-      e.preventDefault();
-      changeRoute(e.target.href);
-    }
-  });
-  renderRoute();
-});
+  start() {
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.addEventListener('click', (e) => {
+        if (e.target.matches('[data-link]')) {
+          e.preventDefault();
+          this._navigateTo(e.target.href);
+        }
+      });
 
-window.addEventListener('popstate', renderRoute);
+      this._renderRoute();
+    });
 
-export { changeRoute, findRoute, renderRoute };
+    window.addEventListener('popstate', () => {
+      this._renderRoute();
+    });
+  }
+}
+
+export default Router;
