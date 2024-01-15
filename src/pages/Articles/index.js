@@ -1,9 +1,11 @@
 import Component from '@/core/Component';
 import ArticleList from '@/components/ArticleList';
 
+import getArticleList from '@/api/getArticleList';
+
 class ArticlesPage extends Component {
   didMount() {
-    this.getArticleList();
+    this.fetchArticleList();
   }
 
   didUpdate() {
@@ -12,22 +14,23 @@ class ArticlesPage extends Component {
 
   template() {
     return `
-    <div class="container"></div>
-    `;
+    <div class="page__container">
+      <div class="page__inner">
+        <h3 class="page__title">개발</h3>
+        <div class="article-list"></div>
+      </div>
+    </div>`;
   }
 
-  getArticleList() {
-    fetch('/dbs/articleList.json')
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({ list: data.articles });
-      });
+  async fetchArticleList() {
+    const list = await getArticleList();
+
+    this.setState({ list });
   }
 
   renderArticleList() {
-    const container = this.target.querySelector('.container');
-
-    new ArticleList(container, this.state);
+    const articleList = this.target.querySelector('.article-list');
+    new ArticleList(articleList, this.state);
   }
 }
 
