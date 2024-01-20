@@ -1,11 +1,19 @@
 import Component from '@/core/Component';
 import ArticleList from '@/components/ArticleList';
 
-import getArticleList from '@/api/getArticleList';
+import tryCatch from '@/api/tryCatch';
+import getArticles from '@/api/getArticles';
+
+import styles from './styles.module.css';
 
 class ArticlesPage extends Component {
   didMount() {
-    this.fetchArticleList();
+    tryCatch(
+      () => this.fetchArticles(),
+      (err) => {
+        console.log(err);
+      },
+    );
   }
 
   didUpdate() {
@@ -14,23 +22,24 @@ class ArticlesPage extends Component {
 
   template() {
     return `
-    <div class="page__container">
-      <div class="page__inner">
-        <h3 class="page__title">개발</h3>
+    <div class=${styles.page__container}>
+      <div class=${styles.page__inner}>
+        <h3 class=${styles.page__title}>개발</h3>
         <div class="article-list"></div>
       </div>
     </div>`;
   }
 
-  async fetchArticleList() {
-    const list = await getArticleList();
+  async fetchArticles() {
+    const list = await getArticles();
 
     this.setState({ list });
   }
 
   renderArticleList() {
-    const articleList = this.target.querySelector('.article-list');
-    new ArticleList(articleList, this.state);
+    const $articleList = this.target.querySelector('.article-list');
+
+    new ArticleList($articleList, this.state);
   }
 }
 

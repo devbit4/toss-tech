@@ -1,10 +1,19 @@
 import Component from '@/core/Component';
 import ArticleDetail from '@/components/ArticleDetail';
 
+import tryCatch from '@/api/tryCatch';
 import getArticle from '@/api/getArticle';
+
+import styles from './styles.module.css';
 
 class ArticlePage extends Component {
   didMount() {
+    tryCatch(
+      () => fetchArticle(),
+      (err) => {
+        console.log(err);
+      },
+    );
     this.fetchArticle();
   }
 
@@ -13,7 +22,13 @@ class ArticlePage extends Component {
   }
 
   template() {
-    return `<div class="page__container"></div>`;
+    return `
+      <div class=${styles.detail__container}>
+        <div class="detail__inner ${styles.detail__inner}">
+        </div>
+      </div>
+
+    `;
   }
 
   async fetchArticle() {
@@ -25,9 +40,9 @@ class ArticlePage extends Component {
   }
 
   renderArticle() {
-    const container = this.target.querySelector('.page__container');
+    const $detailInner = this.target.querySelector('.detail__inner');
 
-    new ArticleDetail(container, this.state);
+    new ArticleDetail($detailInner, this.state);
   }
 }
 
