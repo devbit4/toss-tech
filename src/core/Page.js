@@ -4,29 +4,29 @@ import Footer from '@/components/Footer';
 import Banner from '@/components/Banner';
 
 class Page extends Component {
-  constructor(target, props, routePage) {
+  constructor(target, props, page) {
     super(target, props);
 
-    this.renderLayout(routePage);
+    this.renderLayout(page);
   }
 
   template() {
     return `
-      <header></header>
+      <div class="header"></div>
       <div class="content"></div>
       <div class="banner"></div>
       <footer></footer>
     `;
   }
 
-  renderLayout(routePage) {
-    const header = this.target.querySelector('header');
+  renderLayout(page) {
+    const header = this.target.querySelector('.header');
     const content = this.target.querySelector('.content');
     const banner = this.target.querySelector('.banner');
     const footer = this.target.querySelector('footer');
 
     new Header(header, {});
-    new routePage(content, this.props);
+    new page(content, this.props);
     new Banner(banner, {});
     new Footer(footer, {});
   }

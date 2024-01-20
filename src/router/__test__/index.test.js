@@ -35,27 +35,25 @@ describe('임시 라우터 기능 테스트', () => {
   const target = document.body;
   const router = new Router(target);
 
-  describe('4개의 테스트 라우트를 생성하고', () => {
-    beforeAll(() => {
-      router
-        .addRoute({
-          path: '/',
-          page: Home,
-        })
-        .addRoute({
-          path: '/posts',
-          page: Posts,
-        })
-        .addRoute({
-          path: '/posts/:id',
-          page: Post,
-        })
-        .addRoute({
-          path: '*',
-          page: NotFound,
-        });
+  router
+    .addRoute({
+      path: '/',
+      page: Home,
+    })
+    .addRoute({
+      path: '/posts',
+      page: Posts,
+    })
+    .addRoute({
+      path: '/posts/:id',
+      page: Post,
+    })
+    .addRoute({
+      path: '*',
+      page: NotFound,
     });
 
+  describe('4개의 테스트 라우트를 생성하고', () => {
     describe('addRoute 기능 테스트', () => {
       test('생성된 라우터의 갯수가 4인지 확인', () => {
         expect(router.routes.length).toBe(4);
@@ -169,23 +167,21 @@ describe('실제 페이지 라우터 기능 테스트', () => {
   const target = document.body;
   const router = new Router(target);
 
-  describe('3개의 라우트를 생성하고', () => {
-    beforeAll(() => {
-      router
-        .addRoute({
-          path: '/',
-          page: ArticlesPage,
-        })
-        .addRoute({
-          path: '/design',
-          page: DesignPage,
-        })
-        .addRoute({
-          path: '*',
-          page: NotFoundPage,
-        });
+  router
+    .addRoute({
+      path: '/',
+      page: ArticlesPage,
+    })
+    .addRoute({
+      path: '/design',
+      page: DesignPage,
+    })
+    .addRoute({
+      path: '*',
+      page: NotFoundPage,
     });
 
+  describe('3개의 라우트를 생성하고', () => {
     describe('navigateTo 및 renderRoute 기능 테스트', () => {
       test('/ 이동 시 개발 페이지 랜더링', () => {
         router._navigateTo('/');
