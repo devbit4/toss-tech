@@ -1,0 +1,21 @@
+.page__container {
+  max-width: 980px;
+  margin: 0 auto;
+  margin-bottom: 192px;
+}
+
+.page__inner {
+  width: 92%;
+  margin: 0 auto;
+}
+
+.page__title {
+  font-size: 36px;
+  margin: 52px 0 32px 0;
+  padding: 20px 0;
+  font-weight: bold;
+}
+
+.text {
+  height: 500px;
+}
