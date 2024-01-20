@@ -1,9 +1,11 @@
 import Component from '@/core/Component';
 import ArticleDetail from '@/components/ArticleDetail';
 
+import getArticle from '@/api/getArticle';
+
 class ArticlePage extends Component {
   didMount() {
-    this.getArticle();
+    this.fetchArticle();
   }
 
   didUpdate() {
@@ -11,19 +13,19 @@ class ArticlePage extends Component {
   }
 
   template() {
-    return `<div class="container"></div>`;
+    return `<div class="page__container"></div>`;
   }
 
-  getArticle() {
-    fetch('/dbs/articleList.json')
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({ item: data.articles[this.props.params.id] });
-      });
+  async fetchArticle() {
+    const { id } = this.props.params;
+
+    const article = await getArticle(id);
+
+    this.setState({ item: article });
   }
 
   renderArticle() {
-    const container = this.target.querySelector('.container');
+    const container = this.target.querySelector('.page__container');
 
     new ArticleDetail(container, this.state);
   }

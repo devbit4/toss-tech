@@ -1,3 +1,4 @@
+import Page from '@/core/Page';
 import { pathToRegex, getParams, getQueryParams } from './utils';
 
 class Router {
@@ -31,7 +32,7 @@ class Router {
       queryParams: getQueryParams(location),
     };
 
-    new targetRoute.route.page(this.target, props);
+    new Page(this.target, props, targetRoute.route.page);
   }
 
   _navigateTo(url) {
@@ -45,6 +46,7 @@ class Router {
         if (e.target.matches('[data-link]')) {
           e.preventDefault();
           this._navigateTo(e.target.href);
+          scrollTo(0, 0);
         }
       });
 
