@@ -1,5 +1,7 @@
 import Component from '@/core/Component';
 
+import formatDate from '@/utils/date';
+
 import styles from './styles.module.css';
 
 class ArticleDetail extends Component {
@@ -12,7 +14,7 @@ class ArticleDetail extends Component {
         <div class=${styles.detail__text}>
           <h3 class=${styles.detail__title}>${title}</h3>
           <p class=${styles.detail__summary}>${summary}</p>
-          <p class=${styles.detail__date}>${date}</p>
+          <p class=${styles.detail__date}>${formatDate(date, '.')}</p>
         </div>
       </div>
  `;
