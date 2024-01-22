@@ -25,6 +25,10 @@
   background-color: red;
 }
 
+.header__btn {
+  display: none;
+}
+
 .nav__list {
   display: flex;
   align-items: center;
@@ -55,4 +59,48 @@
   background-color: #3182f6;
   color: white;
   line-height: 18px;
+}
+
+@media screen and (max-width: 675px) {
+  .header__container {
+    height: 100%;
+  }
+
+  .header__inner {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .header__logo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header__btn {
+    display: block;
+  }
+
+  .opend__nav {
+    width: 100%;
+    display: block;
+  }
+
+  .closed__nav {
+    display: none;
+  }
+
+  .nav__list {
+    flex-direction: column;
+  }
+
+  .nav__item {
+    width: 100%;
+    padding: 20px 0;
+  }
+
+  .nav__item button {
+    width: 100%;
+  }
 }

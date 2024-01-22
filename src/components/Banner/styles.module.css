@@ -32,7 +32,7 @@
   font-size: 17px;
   line-height: 1.5;
   color: #e5e8eb;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .banner__btn {
@@ -45,4 +45,25 @@
   padding: 7px 12px;
   color: white;
   border-radius: 6px;
+}
+
+@media screen and (max-width: 675px) {
+  .banner__inner {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .banner__img {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 10px;
+  }
+
+  .banner__title {
+    font-size: 20px;
+  }
+
+  .banner__desc {
+    font-size: 16px;
+  }
 }

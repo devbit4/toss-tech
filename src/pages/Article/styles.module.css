@@ -1,13 +1,11 @@
 .detail__container {
-  max-width: 980px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
 .detail__inner {
   width: 92%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin: 0 auto;
   margin-top: 36px;
   margin-bottom: 64px;
 }

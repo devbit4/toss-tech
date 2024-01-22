@@ -12,6 +12,7 @@ class Component {
 
     this.setup();
     this.mount();
+    this.setEvent();
   }
 
   setup() {}
@@ -38,10 +39,25 @@ class Component {
 
   didUpdate() {}
 
+  setEvent() {}
+
   setState(newState) {
     this.state = { ...this.state, ...newState };
 
     this.update();
+  }
+
+  addEvent(eventType, selector, callback) {
+    const children = Array.from(this.target.querySelectorAll(selector));
+
+    const isTarget = (target) =>
+      children.includes(target) || target.closest(selector);
+
+    this.target.addEventListener(eventType, (event) => {
+      if (!isTarget(event.target)) return false;
+      callback(event);
+      return true;
+    });
   }
 }
 

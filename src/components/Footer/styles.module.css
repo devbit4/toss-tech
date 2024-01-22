@@ -52,3 +52,13 @@
 .footer__socialItem {
   margin-right: 8px;
 }
+
+@media screen and (max-width: 675px) {
+  .footer__list {
+    flex-direction: column;
+  }
+
+  .footer__item {
+    margin-bottom: 40px;
+  }
+}
