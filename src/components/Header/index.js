@@ -25,8 +25,8 @@ class Header extends Component {
                         </div>
                         <div class=${styles.header__btn}>${
                           this.state.open
-                            ? '닫기'
-                            : '<i class="fa-solid fa-bars"></i>'
+                            ? '<img src="/img/icons/x-solid.svg" width="16px">'
+                            : '<img src="/img/icons/bars-solid.svg" width="20px">'
                         }</div>
                     </div>
 
