@@ -8,12 +8,7 @@ import styles from './styles.module.css';
 
 class ArticlesPage extends Component {
   didMount() {
-    tryCatch(
-      () => this.fetchArticles(),
-      (err) => {
-        console.log(err);
-      },
-    );
+    this.fetchArticles();
   }
 
   didUpdate() {
@@ -31,9 +26,13 @@ class ArticlesPage extends Component {
   }
 
   async fetchArticles() {
-    const list = await getArticles();
-
-    this.setState({ list });
+    tryCatch(
+      async () => {
+        const list = await getArticles();
+        this.setState({ list });
+      },
+      (err) => console.log(err),
+    );
   }
 
   renderArticleList() {

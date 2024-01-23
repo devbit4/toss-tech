@@ -20,15 +20,17 @@ class Page extends Component {
   }
 
   renderLayout(page) {
-    const header = this.target.querySelector('.header');
-    const content = this.target.querySelector('.content');
-    const banner = this.target.querySelector('.banner');
-    const footer = this.target.querySelector('footer');
+    const PageContent = page;
 
-    new Header(header, {});
-    new page(content, this.props);
-    new Banner(banner, {});
-    new Footer(footer, {});
+    const $header = this.target.querySelector('.header');
+    const $content = this.target.querySelector('.content');
+    const $banner = this.target.querySelector('.banner');
+    const $footer = this.target.querySelector('footer');
+
+    new Header($header, {});
+    new PageContent($content, this.props);
+    new Banner($banner, {});
+    new Footer($footer, {});
   }
 }
 

@@ -8,12 +8,6 @@ import styles from './styles.module.css';
 
 class ArticlePage extends Component {
   didMount() {
-    tryCatch(
-      () => fetchArticle(),
-      (err) => {
-        console.log(err);
-      },
-    );
     this.fetchArticle();
   }
 
@@ -34,9 +28,16 @@ class ArticlePage extends Component {
   async fetchArticle() {
     const { id } = this.props.params;
 
-    const article = await getArticle(id);
+    tryCatch(
+      async () => {
+        const article = await getArticle(id);
 
-    this.setState({ item: article });
+        this.setState({ item: article });
+      },
+      (err) => {
+        console.log(err);
+      },
+    );
   }
 
   renderArticle() {
