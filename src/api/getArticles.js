@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios from '@/utils/axios';
 
-export default async function getArticles() {
-  const res = await axios('/dbs/articleList.json');
-
-  const data = await res.data;
-
-  return data.articles;
+export default function getArticles({ onSuccess, onError }) {
+  return axios({
+    url: '/dbs/articleList.json',
+    onSuccess,
+    onError,
+  });
 }

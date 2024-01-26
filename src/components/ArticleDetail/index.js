@@ -6,7 +6,7 @@ import styles from './styles.module.css';
 
 class ArticleDetail extends Component {
   template() {
-    const { title, summary, thumbnail, date } = this.props.item;
+    const { title, summary, thumbnail, date } = this.props.article;
 
     return `
       <div class=${styles.detail__box}>

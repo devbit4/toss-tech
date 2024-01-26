@@ -3,11 +3,11 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Banner from '@/components/Banner';
 
-class Page extends Component {
-  constructor(target, props, page) {
+class Layout extends Component {
+  constructor(target, props, pageComponent) {
     super(target, props);
 
-    this.renderLayout(page);
+    this.render(pageComponent);
   }
 
   template() {
@@ -19,19 +19,17 @@ class Page extends Component {
     `;
   }
 
-  renderLayout(page) {
-    const PageContent = page;
-
+  render = (PageComponent) => {
     const $header = this.target.querySelector('.header');
     const $content = this.target.querySelector('.content');
     const $banner = this.target.querySelector('.banner');
     const $footer = this.target.querySelector('footer');
 
     new Header($header, {});
-    new PageContent($content, this.props);
+    new PageComponent($content, this.props);
     new Banner($banner, {});
     new Footer($footer, {});
-  }
+  };
 }
 
-export default Page;
+export default Layout;

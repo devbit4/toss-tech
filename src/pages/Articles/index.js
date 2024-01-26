@@ -1,7 +1,6 @@
 import Component from '@/core/Component';
 import ArticleList from '@/components/ArticleList';
 
-import tryCatch from '@/api/tryCatch';
 import getArticles from '@/api/getArticles';
 
 import styles from './styles.module.css';
@@ -25,14 +24,16 @@ class ArticlesPage extends Component {
     </div>`;
   }
 
-  async fetchArticles() {
-    tryCatch(
-      async () => {
-        const list = await getArticles();
-        this.setState({ list });
-      },
-      (err) => console.log(err),
-    );
+  fetchArticles() {
+    const onSuccess = ({ articles }) => {
+      this.setState({ articles });
+    };
+
+    const onError = (err) => {
+      console.log(err);
+    };
+
+    getArticles({ onSuccess, onError });
   }
 
   renderArticleList() {

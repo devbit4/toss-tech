@@ -1,8 +1,7 @@
 import Component from '@/core/Component';
 import ArticleDetail from '@/components/ArticleDetail';
 
-import tryCatch from '@/api/tryCatch';
-import getArticle from '@/api/getArticle';
+import getArticles from '@/api/getArticles';
 
 import styles from './styles.module.css';
 
@@ -28,16 +27,15 @@ class ArticlePage extends Component {
   async fetchArticle() {
     const { id } = this.props.params;
 
-    tryCatch(
-      async () => {
-        const article = await getArticle(id);
+    const onSuccess = ({ articles }) => {
+      this.setState({ article: articles[id] });
+    };
 
-        this.setState({ item: article });
-      },
-      (err) => {
-        console.log(err);
-      },
-    );
+    const onError = (err) => {
+      console.log(err);
+    };
+
+    getArticles({ onSuccess, onError });
   }
 
   renderArticle() {
