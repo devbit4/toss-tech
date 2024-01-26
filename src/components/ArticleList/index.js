@@ -1,13 +1,31 @@
 import Component from '@/core/Component';
 
+import formatDate from '@/utils/date';
+
+import styles from './styles.module.css';
+
 class ArticleList extends Component {
   template() {
     return `
     <ul>
-    ${this.props.list
+    ${this.props.articles
       .map(
-        (item, index) =>
-          `<li><a href="/articles/${index}" data-link>${item.id}번 ${item.title}아티클</a></li>`,
+        (article, index) =>
+          `<li class=${styles.article__item}>
+            <a href="/articles/${index}" data-link>
+              <img src="${article.thumbnail}" alt="thumbnail" class=${
+                styles.article__img
+              }>
+              <div class=${styles.article__item}>
+                <h3 class=${styles.article__title}>${article.title}</h3>
+                <p class=${styles.article__desc}>${article.summary}</p>
+                <p class=${styles.article__date}>${formatDate(
+                  article.date,
+                  '.',
+                )}</p>
+              </div>
+            </a>
+          </li>`,
       )
       .join('')}
     </ul>

@@ -35,27 +35,25 @@ describe('임시 라우터 기능 테스트', () => {
   const target = document.body;
   const router = new Router(target);
 
-  describe('4개의 테스트 라우트를 생성하고', () => {
-    beforeAll(() => {
-      router
-        .addRoute({
-          path: '/',
-          page: Home,
-        })
-        .addRoute({
-          path: '/posts',
-          page: Posts,
-        })
-        .addRoute({
-          path: '/posts/:id',
-          page: Post,
-        })
-        .addRoute({
-          path: '*',
-          page: NotFound,
-        });
+  router
+    .addRoute({
+      path: '/',
+      page: Home,
+    })
+    .addRoute({
+      path: '/posts',
+      page: Posts,
+    })
+    .addRoute({
+      path: '/posts/:id',
+      page: Post,
+    })
+    .addRoute({
+      path: '*',
+      page: NotFound,
     });
 
+  describe('4개의 테스트 라우트를 생성하고', () => {
     describe('addRoute 기능 테스트', () => {
       test('생성된 라우터의 갯수가 4인지 확인', () => {
         expect(router.routes.length).toBe(4);
@@ -84,17 +82,17 @@ describe('임시 라우터 기능 테스트', () => {
     describe('getParams 기능 테스트', () => {
       const pathname = '/posts/1';
       test('id가 1인지 확인', () => {
-        const targetRoute = router._findRoute(pathname);
+        const targetRoute = router.findRoute(pathname);
 
         expect(getParams(targetRoute)).toEqual({ id: '1' });
       });
       test('id가 2가 아닌지 확인', () => {
-        const targetRoute = router._findRoute(pathname);
+        const targetRoute = router.findRoute(pathname);
 
         expect(getParams(targetRoute).id).not.toBe({ id: '2' });
       });
       test('params 가 id 인지 확인', () => {
-        const targetRoute = router._findRoute(pathname);
+        const targetRoute = router.findRoute(pathname);
 
         expect(getParams(targetRoute)).not.toEqual({ no: '1' });
       });
@@ -119,19 +117,19 @@ describe('임시 라우터 기능 테스트', () => {
 
     describe('findRoute 기능 테스트', () => {
       test('/posts/3에 매칭되는 라우트가 /posts/:id인지 확인', () => {
-        const matchedRoutePah = router._findRoute('/posts/3').route.path;
+        const matchedRoutePah = router.findRoute('/posts/3').route.path;
         expect(matchedRoutePah).toBe('/posts/:id');
         expect(matchedRoutePah).not.toBe('*');
       });
 
       test('/404에 매칭되는 라우트가 /404인지 확인', () => {
-        const matchedRoutePah = router._findRoute('/404').route.path;
+        const matchedRoutePah = router.findRoute('/404').route.path;
         expect(matchedRoutePah).toBe('*');
         expect(matchedRoutePah).not.toBe('/posts/:id');
       });
 
       test('/hello/3에 매칭되는 라우트가 *인지 확인', () => {
-        const matchedRoutePah = router._findRoute('/hello/3').route.path;
+        const matchedRoutePah = router.findRoute('/hello/3').route.path;
         expect(matchedRoutePah).toBe('*');
         expect(matchedRoutePah).not.toBe('/posts/:id');
       });
@@ -139,25 +137,25 @@ describe('임시 라우터 기능 테스트', () => {
 
     describe('navigateTo 및 renderRoute 기능 테스트', () => {
       test('/posts 이동 시 list 페이지 랜더링', () => {
-        router._navigateTo('/posts');
+        router.navigateTo('/posts');
 
         expect(target.innerHTML).toContain('<h3>list</h3>');
       });
 
       test('/posts 이동 시 detail 페이지 비랜더링', () => {
-        router._navigateTo('/posts');
+        router.navigateTo('/posts');
 
         expect(target.innerHTML).not.toContain('<h3>detail</h3>');
       });
 
       test('/hello 이동 시 404 페이지 비랜더링', () => {
-        router._navigateTo('/hello');
+        router.navigateTo('/hello');
 
         expect(target.innerHTML).toContain('<h3>404</h3>');
       });
 
       test('/hello(404) 이동 시 list 페이지 비랜더링', () => {
-        router._navigateTo('/hello');
+        router.navigateTo('/hello');
 
         expect(target.innerHTML).not.toContain('<h3>list</h3>');
       });
@@ -169,50 +167,48 @@ describe('실제 페이지 라우터 기능 테스트', () => {
   const target = document.body;
   const router = new Router(target);
 
-  describe('3개의 라우트를 생성하고', () => {
-    beforeAll(() => {
-      router
-        .addRoute({
-          path: '/',
-          page: ArticlesPage,
-        })
-        .addRoute({
-          path: '/design',
-          page: DesignPage,
-        })
-        .addRoute({
-          path: '*',
-          page: NotFoundPage,
-        });
+  router
+    .addRoute({
+      path: '/',
+      page: ArticlesPage,
+    })
+    .addRoute({
+      path: '/design',
+      page: DesignPage,
+    })
+    .addRoute({
+      path: '*',
+      page: NotFoundPage,
     });
 
+  describe('3개의 라우트를 생성하고', () => {
     describe('navigateTo 및 renderRoute 기능 테스트', () => {
       test('/ 이동 시 개발 페이지 랜더링', () => {
-        router._navigateTo('/');
+        router.navigateTo('/');
 
         expect(target.innerHTML).toContain('개발');
       });
 
       test('/design 이동 시 개발 페이지 비랜더링', () => {
-        router._navigateTo('/design');
+        router.navigateTo('/design');
 
         expect(target.innerHTML).not.toContain('<h3>개발</h3>');
       });
 
       test('/design 이동 시 디자인 페이지 랜더링', () => {
-        router._navigateTo('/design');
+        router.navigateTo('/design');
 
         expect(target.innerHTML).not.toContain('<h3>디자인</h3>');
       });
 
       test('/hello(404) 이동 시 디자인 페이지 비랜더링', () => {
-        router._navigateTo('/hello');
+        router.navigateTo('/hello');
 
         expect(target.innerHTML).not.toContain('<h3>디자인</h3>');
       });
 
       test('/hello(404) 이동 시 404 페이지 랜더링', () => {
-        router._navigateTo('/hello');
+        router.navigateTo('/hello');
 
         expect(target.innerHTML).toContain('이 페이지를 찾을 수 없습니다.');
       });

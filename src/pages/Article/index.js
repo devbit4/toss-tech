@@ -1,7 +1,9 @@
 import Component from '@/core/Component';
 import ArticleDetail from '@/components/ArticleDetail';
 
-import getArticle from '@/api/getArticle';
+import getArticles from '@/api/getArticles';
+
+import styles from './styles.module.css';
 
 class ArticlePage extends Component {
   didMount() {
@@ -13,21 +15,33 @@ class ArticlePage extends Component {
   }
 
   template() {
-    return `<div class="page__container"></div>`;
+    return `
+      <div class=${styles.detail__container}>
+        <div class="detail__inner ${styles.detail__inner}">
+        </div>
+      </div>
+
+    `;
   }
 
   async fetchArticle() {
     const { id } = this.props.params;
 
-    const article = await getArticle(id);
+    const onSuccess = ({ articles }) => {
+      this.setState({ article: articles[id] });
+    };
 
-    this.setState({ item: article });
+    const onError = (err) => {
+      console.log(err);
+    };
+
+    getArticles({ onSuccess, onError });
   }
 
   renderArticle() {
-    const container = this.target.querySelector('.page__container');
+    const $detailInner = this.target.querySelector('.detail__inner');
 
-    new ArticleDetail(container, this.state);
+    new ArticleDetail($detailInner, this.state);
   }
 }
 

@@ -1,3 +1,6 @@
+import './reset.css';
+import './index.css';
+
 import ArticlePage from '@/pages/Article';
 import ArticlesPage from '@/pages/Articles';
 import DesignPage from '@/pages/Design';
