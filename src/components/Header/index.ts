@@ -2,13 +2,13 @@ import Component from '@/core/Component';
 
 import styles from './styles.module.css';
 
-class Header extends Component {
+interface state {
+  open: boolean;
+}
+
+class Header extends Component<state, {}> {
   setup() {
     this.state = { open: false };
-  }
-
-  didUpdate() {
-    console.log(this.state);
   }
 
   template() {

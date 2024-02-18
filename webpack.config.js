@@ -2,9 +2,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env) => ({
-  entry: './src/index.js',
+  entry: './src/index.ts',
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.js', '.ts'],
     alias: {
       '@': path.resolve(__dirname, 'src/'),
       '@public': path.resolve(__dirname, 'public/'),
@@ -29,13 +29,20 @@ module.exports = (env) => ({
   module: {
     rules: [
       {
-        test: /\.m?js$/,
+        test: /\.(ts|js)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
           },
+        },
+      },
+      {
+        test: /\.ts$/, // .ts 에 한하여 ts-loader를 이용하여 transpiling
+        exclude: /node_module/,
+        use: {
+          loader: 'ts-loader',
         },
       },
       {

@@ -1,13 +1,13 @@
-class Component {
+class Component<S = {}, P = {}> {
   target;
 
   state;
 
   props;
 
-  constructor(target, props) {
+  constructor(target: HTMLElement, props: P) {
     this.target = target;
-    this.state = {};
+    this.state = {} as S;
     this.props = props;
 
     this.setup();
@@ -17,7 +17,7 @@ class Component {
 
   setup() {}
 
-  template() {}
+  template(): string | void {}
 
   render() {
     const template = this.template();
@@ -41,20 +41,20 @@ class Component {
 
   setEvent() {}
 
-  setState(newState) {
+  setState(newState: Partial<S>) {
     this.state = { ...this.state, ...newState };
 
     this.update();
   }
 
-  addEvent(eventType, selector, callback) {
+  addEvent(eventType: string, selector: string, callback: (e: Event) => void) {
     const children = Array.from(this.target.querySelectorAll(selector));
 
-    const isTarget = (target) =>
+    const isTarget = (target: HTMLElement) =>
       children.includes(target) || target.closest(selector);
 
     this.target.addEventListener(eventType, (event) => {
-      if (!isTarget(event.target)) return false;
+      if (!isTarget(event.target as HTMLElement)) return false;
       callback(event);
       return true;
     });

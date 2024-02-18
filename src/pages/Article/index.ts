@@ -1,11 +1,24 @@
+import { AxiosError } from 'axios';
+import getArticles from '@/api/getArticles';
 import Component from '@/core/Component';
 import ArticleDetail from '@/components/ArticleDetail';
-
-import getArticles from '@/api/getArticles';
+import { Article } from '@/types/article/types';
 
 import styles from './styles.module.css';
 
-class ArticlePage extends Component {
+interface ResponseData {
+  articles: Article[];
+}
+
+interface State {
+  article: Article;
+}
+
+interface Props {
+  params: { id: string };
+}
+
+class ArticlePage extends Component<State, Props> {
   didMount() {
     this.fetchArticle();
   }
@@ -25,13 +38,13 @@ class ArticlePage extends Component {
   }
 
   async fetchArticle() {
-    const { id } = this.props.params;
+    const id = Number(this.props.params.id);
 
-    const onSuccess = ({ articles }) => {
+    const onSuccess = ({ articles }: ResponseData) => {
       this.setState({ article: articles[id] });
     };
 
-    const onError = (err) => {
+    const onError = (err: AxiosError) => {
       console.log(err);
     };
 
@@ -41,7 +54,7 @@ class ArticlePage extends Component {
   renderArticle() {
     const $detailInner = this.target.querySelector('.detail__inner');
 
-    new ArticleDetail($detailInner, this.state);
+    new ArticleDetail($detailInner as HTMLElement, this.state);
   }
 }
 

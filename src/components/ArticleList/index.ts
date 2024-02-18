@@ -1,10 +1,15 @@
 import Component from '@/core/Component';
 
 import formatDate from '@/utils/date';
+import { Article } from '@/types/article/types';
 
 import styles from './styles.module.css';
 
-class ArticleList extends Component {
+interface Props {
+  articles: Article[];
+}
+
+class ArticleList extends Component<{}, Props> {
   template() {
     return `
     <ul>

@@ -1,10 +1,14 @@
 import Component from '@/core/Component';
-
+import { Article } from '@/types/article/types';
 import formatDate from '@/utils/date';
 
 import styles from './styles.module.css';
 
-class ArticleDetail extends Component {
+interface Props {
+  article: Article;
+}
+
+class ArticleDetail extends Component<{}, Props> {
   template() {
     const { title, summary, thumbnail, date } = this.props.article;
 

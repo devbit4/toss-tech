@@ -1,24 +1,34 @@
-import Page from '@/core/Page';
+import Component from '@/core/Component';
+import Layout from '@/core/Layout';
 import { pathToRegex, getParams, getQueryParams } from './utils';
 
+export interface Route {
+  path: string;
+  page: typeof Component;
+}
+
 class Router {
-  constructor(target) {
+  routes: Route[];
+
+  target: HTMLElement;
+
+  constructor(target: HTMLElement) {
     this.routes = [];
     this.target = target;
   }
 
-  addRoute(route) {
+  addRoute(route: Route) {
     this.routes.push(route);
     return this;
   }
 
-  findRoute(pathname) {
+  findRoute(pathname: string) {
     const allRoutes = this.routes.map((route) => ({
       route,
       matchedPathInfo:
         route.path === '*'
           ? [pathname]
-          : pathname.match(pathToRegex(route.path)),
+          : (pathname.match(pathToRegex(route.path)) as string[]),
     }));
 
     return allRoutes.find((route) => route.matchedPathInfo !== null);
@@ -27,25 +37,29 @@ class Router {
   renderRoute() {
     const targetRoute = this.findRoute(location.pathname);
 
+    if (!targetRoute) return;
+
     const props = {
       params: getParams(targetRoute),
-      queryParams: getQueryParams(location),
+      queryParams: getQueryParams(location.href),
     };
 
-    new Page(this.target, props, targetRoute.route.page);
+    new Layout(this.target, props, targetRoute.route.page);
   }
 
-  navigateTo(url) {
-    history.pushState(null, null, url);
+  navigateTo(url: string) {
+    history.pushState(null, '', url);
     this.renderRoute();
   }
 
   start() {
     document.addEventListener('DOMContentLoaded', () => {
       document.body.addEventListener('click', (e) => {
-        if (e.target.matches('[data-link]')) {
+        const target = e.target as HTMLAnchorElement;
+
+        if (target && target.matches('[data-link]')) {
           e.preventDefault();
-          this.navigateTo(e.target.href);
+          this.navigateTo(target.href);
           scrollTo(0, 0);
         }
       });
