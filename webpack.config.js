@@ -33,18 +33,15 @@ module.exports = (env) => ({
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-          },
         },
       },
-      {
-        test: /\.ts$/,
-        exclude: /node_module/,
-        use: {
-          loader: 'ts-loader',
-        },
-      },
+      // {
+      //   test: /\.ts$/,
+      //   exclude: /node_module/,
+      //   use: {
+      //     loader: 'ts-loader',
+      //   },
+      // },
       {
         test: /\.html$/i,
         use: {
