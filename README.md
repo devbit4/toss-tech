@@ -12,6 +12,8 @@
 - eslint, prettier 설정
 - webpack 설정
 - jest 설정 및 테스트 코드 작성
+- pushstate,popstate 를 통한 router 기능 구현
+- 메인페이지, 상세페이지 구현
 
 
 ---
