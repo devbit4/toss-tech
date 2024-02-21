@@ -1,4 +1,8 @@
-const { default: Component } = require('@/core/Component');
+const {
+  default: Component,
+  StateType,
+  PropsType,
+} = require('@/core/Component');
 const { default: Router } = require('..');
 const { pathToRegex, getParams, getQueryParams } = require('../utils');
 

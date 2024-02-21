@@ -1,11 +1,20 @@
+import { AxiosError } from 'axios';
+import getArticles from '@/api/getArticles';
 import Component from '@/core/Component';
 import ArticleList from '@/components/ArticleList';
-
-import getArticles from '@/api/getArticles';
+import { Article } from '@/types/article/types';
 
 import styles from './styles.module.css';
 
-class ArticlesPage extends Component {
+interface State {
+  articles: Article[];
+}
+
+interface ResponseData {
+  articles: Article[];
+}
+
+class ArticlesPage extends Component<State, {}> {
   didMount() {
     this.fetchArticles();
   }
@@ -25,11 +34,11 @@ class ArticlesPage extends Component {
   }
 
   fetchArticles() {
-    const onSuccess = ({ articles }) => {
+    const onSuccess = ({ articles }: ResponseData) => {
       this.setState({ articles });
     };
 
-    const onError = (err) => {
+    const onError = (err: AxiosError) => {
       console.log(err);
     };
 
@@ -39,7 +48,7 @@ class ArticlesPage extends Component {
   renderArticleList() {
     const $articleList = this.target.querySelector('.article-list');
 
-    new ArticleList($articleList, this.state);
+    new ArticleList($articleList as HTMLElement, this.state);
   }
 }
 
